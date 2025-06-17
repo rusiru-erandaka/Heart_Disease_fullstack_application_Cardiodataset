@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heart Disease Risk Level Predictor</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            color: #333;
+        }
+        
+        .container {
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            width: 90%;
+            max-width: 500px;
+            padding: 30px;
+            transform: scale(0.95);
+            transition: transform 0.3s ease;
+            animation: fadeIn 0.5s ease forwards;
+        }
+        
+        .container:hover {
+            transform: scale(1);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #e74c3c;
+            margin-bottom: 25px;
+            font-weight: 600;
+            position: relative;
+        }
+        
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: #e74c3c;
+            border-radius: 3px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+            animation: slideIn 0.5s ease forwards;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #555;
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s;
+            box-sizing: border-box;
+        }
+        
+        input:focus, select:focus {
+            border-color: #e74c3c;
+            box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.2);
+            outline: none;
+        }
+        
+        .submit-btn {
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            padding: 14px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            width: 100%;
+            transition: all 0.3s;
+            margin-top: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        .submit-btn:hover {
+            background-color: #c0392b;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.3);
+        }
+        
+        .note {
+            font-size: 14px;
+            color: #777;
+            text-align: center;
+            margin-top: 20px;
+            font-style: italic;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        @keyframes slideIn {
+            from { 
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to { 
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0.4); }
+            70% { box-shadow: 0 0 0 10px rgba(231, 76, 60, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(231, 76, 60, 0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container pulse">
+        <h1>Heart Disease Risk Level Predictor</h1>
+        <p class="note">Please fill this form with your correct and true details</p>
+        
+        <form id="heartForm">
+            <div class="form-group" style="animation-delay: 0.1s">
+                <label for="name">Name</label>
+                <input type="text" id="name" placeholder="e.g. John" required>
+            </div>
+            
+            <div class="form-group" style="animation-delay: 0.2s">
+                <label for="gender">Gender</label>
+                <select id="gender" required>
+                    <option value="" disabled selected>Select gender</option>
+                    <option value="0">Male</option>
+                    <option value="1">Female</option>
+                </select>
+            </div>
+            
+            <div class="form-group" style="animation-delay: 0.3s">
+                <label for="age">Age</label>
+                <input type="number" id="age" placeholder="e.g. 35" min="1" max="120" required>
+            </div>
+            
+            <div class="form-group" style="animation-delay: 0.4s">
+                <label for="tc">Total Cholesterol (mg/dL)</label>
+                <input type="number" id="tc" placeholder="e.g. 230" min="100" max="400" required>
+            </div>
+            
+            <div class="form-group" style="animation-delay: 0.5s">
+                <label for="hdl">HDL Cholesterol (mg/dL)</label>
+                <input type="number" id="hdl" placeholder="e.g. 342" min="10" max="150" required>
+            </div>
+            
+            <div class="form-group" style="animation-delay: 0.6s">
+                <label for="smoker">Smoker</label>
+                <select id="smoker" required>
+                    <option value="" disabled selected>Select option</option>
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                </select>
+            </div>
+            
+            <div class="form-group" style="animation-delay: 0.7s">
+                <label for="bp_med">Blood Pressure Medication</label>
+                <select id="bp_med" required>
+                    <option value="" disabled selected>Select option</option>
+                    <option value="0">Not taking</option>
+                    <option value="1">Taking</option>
+                </select>
+            </div>
+            
+            <div class="form-group" style="animation-delay: 0.8s">
+                <label for="diabetic">Diabetic</label>
+                <select id="diabetic" required>
+                    <option value="" disabled selected>Select option</option>
+                    <option value="1">Yes</option>
+                    <option value="0">No</option>
+                </select>
+            </div>
+            
+            <button type="submit" class="submit-btn" style="animation-delay: 0.9s">Submit Details</button>
+        </form>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Form submission handler
+            const form = document.getElementById('heartForm');
+            
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Collect form data
+                const formData = {
+                    name: document.getElementById('name').value,
+                    gender: document.getElementById('gender').value,
+                    age: document.getElementById('age').value,
+                    tc: document.getElementById('tc').value,
+                    hdl: document.getElementById('hdl').value,
+                    smoker: document.getElementById('smoker').value,
+                    bp_med: document.getElementById('bp_med').value,
+                    diabetic: document.getElementById('diabetic').value
+                };
+                
+                // Here you would typically send the data to a server
+                // For this example, we'll just show an alert
+                alert('Form submitted successfully!\n\nWe will analyze your heart disease risk based on the provided information.');
+                
+                // You could add actual risk calculation logic here
+                // calculateRisk(formData);
+                
+                // Reset form
+                form.reset();
+                
+                // Add visual feedback
+                const container = document.querySelector('.container');
+                container.classList.remove('pulse');
+                container.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    container.classList.add('pulse');
+                    container.style.transform = 'scale(1)';
+                }, 100);
+            });
+            
+            // Add hover effect to inputs
+            const inputs = document.querySelectorAll('input, select');
+            inputs.forEach(input => {
+                input.addEventListener('mouseenter', function() {
+                    this.style.transform = 'scale(1.02)';
+                });
+                
+                input.addEventListener('mouseleave', function() {
+                    this.style.transform = 'scale(1)';
+                });
+            });
+            
+            // Animate form groups sequentially
+            const formGroups = document.querySelectorAll('.form-group');
+            formGroups.forEach((group, index) => {
+                group.style.animationDelay = `${0.1 + (index * 0.1)}s`;
+            });
+        });
+        
+        // This would be your risk calculation function
+        function calculateRisk(data) {
+            // This is a placeholder - actual risk calculation would be more complex
+            let riskScore = 0;
+            
+            // Age factor
+            riskScore += parseInt(data.age) * 0.1;
+            
+            // Gender factor
+            if(data.gender === '0') riskScore += 5; // Male
+            else riskScore += 3; // Female
+            
+            // Cholesterol ratio
+            const ratio = parseInt(data.tc) / parseInt(data.hdl);
+            riskScore += ratio * 2;
+            
+            // Other factors
+            if(data.smoker === '1') riskScore += 10;
+            if(data.bp_med === '1') riskScore += 8;
+            if(data.diabetic === '1') riskScore += 12;
+            
+            // Determine risk level (this is simplified)
+            let riskLevel;
+            if(riskScore < 20) riskLevel = 'Low Risk';
+            else if(riskScore < 40) riskLevel = 'Moderate Risk';
+            else riskLevel = 'High Risk';
+            
+            alert(`Based on our analysis, your heart disease risk level is: ${riskLevel}`);
+            
+            return riskLevel;
+        }
+    </script>
+</body>
+</html>
