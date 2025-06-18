@@ -25,9 +25,9 @@
             max-width: 500px;
             padding: 30px;
             text-align: center;
-            animation: fadeIn 0.5s ease forwards;
             position: relative;
             overflow: hidden;
+            animation: fadeIn 0.5s ease forwards;
         }
         
         h1 {
@@ -55,8 +55,8 @@
             padding: 20px;
             margin: 20px 0;
             text-align: left;
-            animation: slideIn 0.5s ease forwards;
             border-left: 4px solid #e74c3c;
+            animation: slideIn 0.5s ease forwards;
         }
         
         .result-item {
@@ -95,7 +95,7 @@
             height: 100%;
             border-radius: 15px;
             background: linear-gradient(90deg, #2ecc71, #f1c40f, #e74c3c);
-            width: 0;
+            width: {{ result.risk }}%;
             transition: width 1.5s ease-out;
         }
         
@@ -146,6 +146,13 @@
             box-shadow: 0 5px 15px rgba(231, 76, 60, 0.3);
         }
         
+        .heart-icon {
+            color: #e74c3c;
+            font-size: 50px;
+            margin-bottom: 20px;
+            animation: heartbeat 1.5s infinite;
+        }
+        
         @keyframes fadeIn {
             from { opacity: 0; }
             to { opacity: 1; }
@@ -162,23 +169,6 @@
             }
         }
         
-        .pulse {
-            animation: pulse 2s infinite;
-        }
-        
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.02); }
-            100% { transform: scale(1); }
-        }
-        
-        .heart-icon {
-            color: #e74c3c;
-            font-size: 50px;
-            margin-bottom: 20px;
-            animation: heartbeat 1.5s infinite;
-        }
-        
         @keyframes heartbeat {
             0% { transform: scale(1); }
             25% { transform: scale(1.1); }
@@ -189,23 +179,23 @@
     </style>
 </head>
 <body>
-    <div class="container pulse">
+    <div class="container">
         <div class="heart-icon">❤️</div>
         <h1>Your Heart Disease Risk Results</h1>
         
-        <div class="result-card" style="animation-delay: 0.2s">
+        <div class="result-card">
             <div class="result-item">
                 <span class="label">Name:</span>
-                <span class="value" id="name-value">John Doe</span>
+                <span class="value">{{ result.name }}</span>
             </div>
             <div class="result-item">
                 <span class="label">Risk Level:</span>
-                <span class="value" id="risk-value">35%</span>
+                <span class="value">{{ result.risk }}%</span>
             </div>
         </div>
         
         <div class="risk-meter">
-            <div class="risk-level" id="risk-meter"></div>
+            <div class="risk-level"></div>
             <div class="risk-marker" style="left: 25%;"></div>
             <div class="risk-marker" style="left: 50%;"></div>
             <div class="risk-marker" style="left: 75%;"></div>
@@ -218,53 +208,31 @@
             <span>Very High</span>
         </div>
         
-        <div class="interpretation" style="animation-delay: 0.4s">
+        <div class="interpretation">
             <h3>What This Means</h3>
-            <p id="interpretation-text">Based on your results, you have a moderate risk of developing heart disease. Consider consulting with a healthcare provider for personalized advice.</p>
+            <p id="interpretation-text">
+                {% if result.risk < 20 %}
+                    Your heart disease risk is low. Maintain your healthy lifestyle with regular exercise and a balanced diet.
+                {% elif result.risk < 40 %}
+                    You have a moderate risk of developing heart disease. Consider small lifestyle improvements and regular check-ups.
+                {% elif result.risk < 60 %}
+                    Your heart disease risk is high. We recommend consulting with a healthcare provider and making lifestyle changes.
+                {% else %}
+                    Your heart disease risk is very high. Please consult with a healthcare provider immediately for evaluation and guidance.
+                {% endif %}
+            </p>
         </div>
         
-        <button class="btn" onclick="window.location.href='index.html'">Back to Predictor</button>
+        <button class="btn" onclick="window.location.href='/'">Back to Predictor</button>
     </div>
 
     <script>
+        // Simple animation for the risk meter
         document.addEventListener('DOMContentLoaded', function() {
-            // In a real application, you would get these values from your backend
-            // For demo purposes, we'll use these placeholder values
-            const results = {
-                name: "John",
-                risk: 35
-            };
-            
-            // Set the values from the results
-            document.getElementById('name-value').textContent = results.name;
-            document.getElementById('risk-value').textContent = results.risk + '%';
-            
-            // Animate the risk meter
-            const riskMeter = document.getElementById('risk-meter');
-            setTimeout(() => {
-                riskMeter.style.width = results.risk + '%';
-            }, 500);
-            
-            // Set interpretation text based on risk level
-            const interpretationText = document.getElementById('interpretation-text');
-            let interpretation = '';
-            
-            if(results.risk < 20) {
-                interpretation = "Your heart disease risk is low. Maintain your healthy lifestyle with regular exercise and a balanced diet.";
-            } else if(results.risk < 40) {
-                interpretation = "You have a moderate risk of developing heart disease. Consider small lifestyle improvements and regular check-ups.";
-            } else if(results.risk < 60) {
-                interpretation = "Your heart disease risk is high. We recommend consulting with a healthcare provider and making lifestyle changes.";
-            } else {
-                interpretation = "Your heart disease risk is very high. Please consult with a healthcare provider immediately for evaluation and guidance.";
-            }
-            
-            interpretationText.textContent = interpretation;
-            
-            // Add animation to the interpretation box
-            setTimeout(() => {
-                document.querySelector('.interpretation').style.opacity = '1';
-            }, 1000);
+            const riskMeter = document.querySelector('.risk-level');
+            // Force reflow to trigger the animation
+            void riskMeter.offsetWidth;
+            riskMeter.style.width = '{{ result.risk }}%';
         });
     </script>
 </body>
