@@ -143,15 +143,15 @@
         <h1>Heart Disease Risk Level Predictor</h1>
         <p class="note">Please fill this form with your correct and true details</p>
         
-        <form id="heartForm" action="http://127.0.0.1:5000/getresults" method="POST">
+        <form id="heartForm" action="/getresults" method="POST">
             <div class="form-group" style="animation-delay: 0.1s">
                 <label for="name">Name</label>
-                <input type="text" name="name" placeholder="e.g. John" required>
+                <input type="text" id="name" name="name" placeholder="e.g. John" required>
             </div>
             
             <div class="form-group" style="animation-delay: 0.2s">
                 <label for="gender">Gender</label>
-                <select name="gender" required>
+                <select id="gender" name="gender" required>
                     <option value="" disabled selected>Select gender</option>
                     <option value="0">Male</option>
                     <option value="1">Female</option>
@@ -160,22 +160,22 @@
             
             <div class="form-group" style="animation-delay: 0.3s">
                 <label for="age">Age</label>
-                <input type="number" name="age" placeholder="e.g. 35" min="1" max="120" required>
+                <input type="number" id="age" name="age" placeholder="e.g. 35" min="1" max="120" required>
             </div>
             
             <div class="form-group" style="animation-delay: 0.4s">
                 <label for="tc">Total Cholesterol (mg/dL)</label>
-                <input type="number" name="tc" placeholder="e.g. 230" min="100" max="400" required>
+                <input type="number" id="tc" name="tc" placeholder="e.g. 230" min="100" max="400" required>
             </div>
             
             <div class="form-group" style="animation-delay: 0.5s">
                 <label for="hdl">HDL Cholesterol (mg/dL)</label>
-                <input type="number" name="hdl" placeholder="e.g. 342" min="10" max="150" required>
+                <input type="number" id="hdl" name="hdl" placeholder="e.g. 342" min="10" max="150" required>
             </div>
             
             <div class="form-group" style="animation-delay: 0.6s">
-                <label for="smoker">Smoker</label>
-                <select name="smoke" required>
+                <label for="smoke">Smoker</label>
+                <select id="smoke" name="smoke" required>
                     <option value="" disabled selected>Select option</option>
                     <option value="1">Yes</option>
                     <option value="0">No</option>
@@ -183,8 +183,8 @@
             </div>
             
             <div class="form-group" style="animation-delay: 0.7s">
-                <label for="bp_med">Blood Pressure Medication</label>
-                <select name="bpm" required>
+                <label for="bpm">Blood Pressure Medication</label>
+                <select id="bpm" name="bpm" required>
                     <option value="" disabled selected>Select option</option>
                     <option value="0">Not taking</option>
                     <option value="1">Taking</option>
@@ -192,8 +192,8 @@
             </div>
             
             <div class="form-group" style="animation-delay: 0.8s">
-                <label for="diabetic">Diabetic</label>
-                <select name="diab" required>
+                <label for="diab">Diabetic</label>
+                <select id="diab" name="diab" required>
                     <option value="" disabled selected>Select option</option>
                     <option value="1">Yes</option>
                     <option value="0">No</option>
@@ -204,6 +204,26 @@
         </form>
     </div>
 
-    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add hover effect to inputs
+            const inputs = document.querySelectorAll('input, select');
+            inputs.forEach(input => {
+                input.addEventListener('mouseenter', function() {
+                    this.style.transform = 'scale(1.02)';
+                });
+                
+                input.addEventListener('mouseleave', function() {
+                    this.style.transform = 'scale(1)';
+                });
+            });
+            
+            // Animate form groups sequentially
+            const formGroups = document.querySelectorAll('.form-group');
+            formGroups.forEach((group, index) => {
+                group.style.animationDelay = `${0.1 + (index * 0.1)}s`;
+            });
+        });
+    </script>
 </body>
 </html>
