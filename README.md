@@ -61,3 +61,18 @@ Dropout is a regularization technique used to prevent overfitting. In this proje
 ```python
 model.compile(optimizer='adam', loss='mse', metrics=['mse', 'mae'])
 ```
+
+---
+
+## 🔔 CustomCallback Function
+
+A custom Keras callback is implemented to calculate and log the R² score at the end of each training epoch:
+
+```python
+class CustomCallback(keras.callbacks.Callback):
+    def on_epoch_end(self, epoch, logs=None):
+        predicted_result = model.predict(test_data)
+        r2 = r2_score(test_target, predicted_result)
+        print('Epoch', epoch, '- R² score:', r2)
+```
+
