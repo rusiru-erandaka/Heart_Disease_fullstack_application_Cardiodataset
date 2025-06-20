@@ -32,3 +32,32 @@ The dataset is preprocessed using `MinMaxScaler` from Scikit-learn for both inpu
 ## 🧠 Model Architecture
 
 The FFNN is designed with the following architecture:
+
+
+```python
+model = Sequential()
+model.add(Dense(128, input_dim=7, activation='sigmoid', kernel_initializer='normal'))
+model.add(Dropout(0.5))
+model.add(Dense(64, activation='sigmoid'))
+model.add(Dropout(0.5))
+model.add(Dense(10, activation='sigmoid'))
+model.add(Dense(1, activation='linear'))
+```
+
+### 🔒 Why Use Dropout Layers?
+
+Dropout is a regularization technique used to prevent overfitting. In this project, we apply a dropout rate of 0.5 after the first and second hidden layers. This helps ensure the model generalizes well by randomly deactivating 50% of the neurons during training, encouraging the network to learn more robust features.
+
+---
+
+## 🔁 Training Configuration
+
+- **Optimizer**: Adam  
+- **Loss Function**: Mean Squared Error (MSE)  
+- **Metrics**: MSE and MAE  
+- **Epochs**: 200  
+- **Validation Split**: 20%
+
+```python
+model.compile(optimizer='adam', loss='mse', metrics=['mse', 'mae'])
+```
