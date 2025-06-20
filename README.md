@@ -18,3 +18,17 @@ flask-back/
 └── main.py                                     # Flask backend to serve predictions
 ```
 
+---
+
+## 📊 Dataset Overview
+
+- **Inputs**: 7 features selected from the cardio dataset  
+- **Target**: A continuous value representing cardiovascular health risk (scaled between 0 and 1)
+
+The dataset is preprocessed using `MinMaxScaler` from Scikit-learn for both input features and the target variable.
+
+---
+
+## 🧠 Model Architecture
+
+The FFNN is designed with the following architecture:
